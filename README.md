@@ -31,6 +31,13 @@ We would like you to enhance the existing project and see you complete the follo
 - Error handling in case of failures.
 - Implement idempotency logic to avoid duplicate resource creation.*
 
+##Solution
+- All the changes are in master branch
+- I have taken booking Id in the request and have made idempotency check on the basis of booking Id
+- Validation related to null check are added and logical validation are not addded yet like checkout date > checkin date
+- Test cases are added to check get all booking and create booking, idempotency check and Bad request exception
+- Please use below samle curl for execution
+
 ## Assignment submission
 Thank you very much for your time to take this test. Please upload this complete solution in Github and send us the link to `bfs-sor-interview@paypal.com`.
 
@@ -38,3 +45,30 @@ Thank you very much for your time to take this test. Please upload this complete
 - If you are not comfortable with jsonschema2pojo plugin, you can create your own POJOs
 - *Validations & Idempotency check are not mandatory for 90 minutes online test. However, if you complete it then you would be getting extra points for that.
 
+
+## Create Booking
+curl --location --request POST 'http://localhost:8080/v1/bfs/booking' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+"id":"4",
+"firstName": "Sourav",
+"lastName": "Tathgur",
+"birthDate": "2021-03-10",
+"checkInDate": "2021-03-10T14:42:32.000Z",
+"checkOutDate": "2021-03-10T14:42:32.000Z",
+"totalPrice": 11.2,
+"deposit": 20.0,
+"address": {
+"line1": "956",
+"line2": "Ludhiana",
+"city": "Ludhiana",
+"state": "Punjab",
+"zipCode": "141008"
+}
+}'
+
+##Get All Booking
+
+curl --location --request GET 'http://localhost:8080/v1/bfs/booking' \
+--header 'Content-Type: application/xop+xml' \
+--data-raw ''
