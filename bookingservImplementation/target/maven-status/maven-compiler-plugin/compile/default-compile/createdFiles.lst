@@ -1,0 +1,12 @@
+com\paypal\bfs\test\bookingserv\BookingServApplication.class
+com\paypal\bfs\test\bookingserv\exception\Error.class
+com\paypal\bfs\test\bookingserv\impl\BookingResourceImpl.class
+com\paypal\bfs\test\bookingserv\service\BookingServiceImpl.class
+com\paypal\bfs\test\bookingserv\service\ValidationService.class
+com\paypal\bfs\test\bookingserv\exception\BadRequestException.class
+com\paypal\bfs\test\bookingserv\validations\AddressValidator.class
+com\paypal\bfs\test\bookingserv\exception\ElementWithSameIDAlreadyExistsException.class
+com\paypal\bfs\test\bookingserv\exception\ElementNotFoundException.class
+com\paypal\bfs\test\bookingserv\validations\BookingValidator.class
+com\paypal\bfs\test\bookingserv\validations\IValidator.class
+com\paypal\bfs\test\bookingserv\exception\ErrorCodes.class
