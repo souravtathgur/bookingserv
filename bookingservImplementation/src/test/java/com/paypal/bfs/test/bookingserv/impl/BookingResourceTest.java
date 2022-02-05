@@ -97,12 +97,55 @@ class BookingResourceTest {
                 bookingeRepository
                         .findById(newBookingId)
                         .orElseThrow(
-                                () -> new IllegalStateException("New Booking has not been saved in the repository")),
-                equalTo(booking));
+                                () -> new IllegalStateException("New Booking has not been saved in the repository")).getId(),
+                equalTo(booking.getId()));
+    }
+
+    @Test
+    @DisplayName("When a Booking creation is requested with the same id it return previous booking stored")
+    void bookingCreatedIdempotencyCheck() throws Exception {
+
+        Booking booking = getBooking();
+
+        Long bookingId1 =
+                mapper
+                        .readValue(
+                                mockMvc
+                                        .perform(
+                                                post("/v1/bfs/booking")
+                                                        .contentType(MediaType.APPLICATION_JSON)
+                                                        .content(mapper.writeValueAsString(booking)))
+                                        .andExpect(status().isCreated())
+                                        .andReturn()
+                                        .getResponse()
+                                        .getContentAsString(),
+                                Booking.class)
+                        .getId();
+
+
+        Long bookingId2 =
+                mapper
+                        .readValue(
+                                mockMvc
+                                        .perform(
+                                                post("/v1/bfs/booking")
+                                                        .contentType(MediaType.APPLICATION_JSON)
+                                                        .content(mapper.writeValueAsString(booking)))
+                                        .andExpect(status().isCreated())
+                                        .andReturn()
+                                        .getResponse()
+                                        .getContentAsString(),
+                                Booking.class)
+                        .getId();
+
+       assertThat(bookingeRepository
+               .findAll().size(),equalTo(1));
+
     }
 
     private Booking  getBooking() {
         Booking booking=new Booking();
+        booking.setId(123l);
         booking.setFirstName("Sourav");
         booking.setLastName("Tathgur");
         booking.setBirthDate(new Date());
